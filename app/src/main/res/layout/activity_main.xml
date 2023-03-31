@@ -12,7 +12,7 @@
         android:id="@+id/appLogo"
         android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_150sdp"
-        android:background="@drawable/test_app_icon"
+        android:background="@drawable/img"
         />
 
 
