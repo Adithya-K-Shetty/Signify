@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 
 public class Dashboard extends AppCompatActivity {
     MeowBottomNavigation bottomNavigation;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,6 +20,7 @@ public class Dashboard extends AppCompatActivity {
         bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.baseline_home_24));
         bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.baseline_warning_24));
         bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.baseline_location_on_24));
+
         bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
             @Override
             public void onShowItem(MeowBottomNavigation.Model item) {
@@ -31,16 +35,26 @@ public class Dashboard extends AppCompatActivity {
                         fragment = new TellTailFragment();
                         break;
                     case 3:
+//
                         fragment = new MapsFragment();
                         break;
                 }
                 loadFragment(fragment);
+
+            }
+        });
+
+        bottomNavigation.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
+            @Override
+            public void onReselectItem(MeowBottomNavigation.Model item) {
+                Toast.makeText(getApplicationContext(),"You are already in selected screen",Toast.LENGTH_SHORT).show();
             }
         });
         bottomNavigation.show(1, true);
         bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
             @Override
             public void onClickItem(MeowBottomNavigation.Model item) {
+
                 //Toast.makeText(getApplicationContext(),"you clicked"+item.getId(),Toast.LENGTH_LONG).show();
             }
         });

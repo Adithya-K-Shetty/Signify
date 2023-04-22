@@ -31,6 +31,7 @@ public class Welcome extends AppCompatActivity{
             public void onClick(View view) {
                 Intent i = new Intent(Welcome.this, Dashboard.class);
                 startActivity(i);
+
             }
         });
 
