@@ -1,5 +1,6 @@
 package com.example.signify;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,6 +41,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link TellTailFragment#newInstance} factory method to
@@ -64,7 +72,7 @@ public class TellTailFragment extends Fragment {
     public Dictionary signs_dict = new Hashtable();
     public Boolean received_image = false;
 
-//    private DatabaseReference myRef;
+    private DatabaseReference myRef;
     public TellTailFragment() {
         // Required empty public constructor
     }
@@ -90,6 +98,7 @@ public class TellTailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        myRef = FirebaseDatabase.getInstance().getReference();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -102,16 +111,11 @@ public class TellTailFragment extends Fragment {
         if(requestCode == 3){
             img  = (Bitmap) data.getExtras().get("data");
             received_image = true;
-//            int dimension = Math.min(image.getWidth(), image.getHeight());
-//            image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
 
             if(received_image){
                 new MyAsyncTask().execute();
             }
 
-
-//            image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
-//            classifyImage(image);
         }
     }
     private class MyAsyncTask extends AsyncTask<Void, Void, String> {
@@ -135,7 +139,6 @@ public class TellTailFragment extends Fragment {
                     .post(postBodyImage)
                     .build();
 
-            /*********** TESTING NEW STUFF ***************/
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -143,17 +146,10 @@ public class TellTailFragment extends Fragment {
                     Log.d("FAIL", e.getMessage());
                     System.out.println("FAIL : - "+ e.getMessage());
                     System.out.println("Failed to Connect to Server");
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            System.out.println("Failed to Connect to Server");
-//                        }
-//                    });
                 }
 
                 @Override
                 public void onResponse(Call call, final Response response) throws IOException {
-                    // In order to access the TextView inside the UI thread, the code is executed inside runOnUiThread()
                     try {
 
                         all_signs = response.body().string();
@@ -161,70 +157,47 @@ public class TellTailFragment extends Fragment {
                         String[] all_signs_arr = all_signs.split("@");
                         ArrayList<String> all_signs_list = new ArrayList<String>(
                                 Arrays.asList(all_signs_arr));
-//                        get_data(all_signs_list);
+                        get_data(all_signs_list);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-//                            runOnUiThread(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    try {
-//                                        all_signs = response.body().string();
-//                                        System.out.println(all_signs);
-//                                    } catch (IOException e) {
-//                                        e.printStackTrace();
-//                                    }
-//                                }
-//                            });
                 }
             });
-            /********** END OF TESTING ******************/
-
-            System.out.println(all_signs);
             return all_signs;
         }
         @Override
         protected void onPostExecute(String result) {
-            System.out.println("Hello World");
-            System.out.println(result);
-            System.out.println(all_signs);
-//            if (response_success){
-//                String[] all_signs_arr = all_signs.split("@");
-//                ArrayList<String> all_signs_list = new ArrayList<String>(
-//                        Arrays.asList(all_signs_arr));
-//                get_data(all_signs_list);
-//            }
         }
     }
-//    private void get_data(ArrayList<String> all_signs_list) {
-//        Query query = myRef.child("AllSigns");
-//
-//        query.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for(DataSnapshot snapshot1 : snapshot.getChildren()){
-//                    if(all_signs_list.contains(snapshot1.child("signName").getValue().toString())){
-//                        signs_dict.put(snapshot1.child("signImageUrl").getValue().toString(),snapshot1.child("signDescription").getValue().toString());
-//                    }
+    private void get_data(ArrayList<String> all_signs_list) {
+        Query query = myRef.child("AllSigns");
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snapshot1 : snapshot.getChildren()){
+                    if(all_signs_list.contains(snapshot1.child("signName").getValue().toString())){
+                        signs_dict.put(snapshot1.child("signImageUrl").getValue().toString(),snapshot1.child("signDescription").getValue().toString());
+                    }
+                }
+                System.out.println(signs_dict);
+//                String url = "";
+//                for(Enumeration enm = signs_dict.keys(); enm.hasMoreElements();)
+//                {
+////prints the keys
+//                    url =  enm.nextElement().toString();
+//                    System.out.println("Hello");
 //                }
-//                System.out.println(signs_dict);
-////                String url = "";
-////                for(Enumeration enm = signs_dict.keys(); enm.hasMoreElements();)
-////                {
-//////prints the keys
-////                    url =  enm.nextElement().toString();
-////                    System.out.println("Hello");
-////                }
-////                System.out.println(url);
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
+//                System.out.println(url);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
