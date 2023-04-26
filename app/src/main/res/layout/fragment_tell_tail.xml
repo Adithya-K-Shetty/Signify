@@ -22,6 +22,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
+
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.297" />
 
@@ -31,7 +32,9 @@
             android:layout_height="61dp"
             android:text="PREDICT"
             android:textSize="20sp"
+
             android:backgroundTint="@color/black"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
