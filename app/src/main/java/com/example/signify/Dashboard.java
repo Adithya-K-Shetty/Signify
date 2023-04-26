@@ -19,7 +19,8 @@ public class Dashboard extends AppCompatActivity {
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.baseline_home_24));
         bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.baseline_warning_24));
-        bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.baseline_location_on_24));
+        bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.baseline_format_list_bulleted_24));
+        bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.baseline_location_on_24));
 
         bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
             @Override
@@ -35,7 +36,9 @@ public class Dashboard extends AppCompatActivity {
                         fragment = new TellTailFragment();
                         break;
                     case 3:
-//
+                        fragment = new ListFragment();
+                        break;
+                    case 4:
                         fragment = new MapsFragment();
                         break;
                 }

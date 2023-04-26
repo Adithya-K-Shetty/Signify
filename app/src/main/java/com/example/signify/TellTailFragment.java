@@ -70,6 +70,10 @@ public class TellTailFragment extends Fragment {
     public String all_signs;
 
     public Dictionary signs_dict = new Hashtable();
+//    public ArrayList<String> imageUrlList =  new ArrayList<String>();
+//    public ArrayList<String> mainDescriptionList = new ArrayList<String>();
+//    public ArrayList<String> subDescruptionList = new ArrayList<String>();
+    public static ArrayList<SignHelper> sign_data_list;
     public Boolean received_image = false;
 
     private DatabaseReference myRef;
@@ -98,7 +102,9 @@ public class TellTailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         myRef = FirebaseDatabase.getInstance().getReference();
+        sign_data_list = new ArrayList<>();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -123,6 +129,7 @@ public class TellTailFragment extends Fragment {
         protected String doInBackground(Void... voids) {
 
             String postUrl = "http://192.168.43.101:5000/inputImage";
+//            String postUrl = "https://c2d4-117-200-101-80.in.ngrok.io/inputImage";
 
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             img.compress(Bitmap.CompressFormat.JPEG, 100, stream);
@@ -157,6 +164,7 @@ public class TellTailFragment extends Fragment {
                         String[] all_signs_arr = all_signs.split("@");
                         ArrayList<String> all_signs_list = new ArrayList<String>(
                                 Arrays.asList(all_signs_arr));
+                        System.out.println(all_signs_list);
                         get_data(all_signs_list);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -171,15 +179,25 @@ public class TellTailFragment extends Fragment {
     }
     private void get_data(ArrayList<String> all_signs_list) {
         Query query = myRef.child("AllSigns");
-
+        System.out.println("Hello World 1");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                System.out.println("Hello World 2");
                 for(DataSnapshot snapshot1 : snapshot.getChildren()){
                     if(all_signs_list.contains(snapshot1.child("signName").getValue().toString())){
-                        signs_dict.put(snapshot1.child("signImageUrl").getValue().toString(),snapshot1.child("signDescription").getValue().toString());
+                        signs_dict.put(snapshot1.child("signImageUrl").getValue().toString(),snapshot1.child("signDescription1").getValue().toString());
+                        SignHelper signHelper = new SignHelper();
+                        signHelper.setImageUrl(snapshot1.child("signImageUrl").getValue().toString());
+                        signHelper.setTitle(snapshot1.child("signName").getValue().toString());
+                        signHelper.setDescription1(snapshot1.child("signDescription1").getValue().toString());
+                        signHelper.setDescription2(snapshot1.child("signDescription2").getValue().toString());
+                        signHelper.setSeverityValue(snapshot1.child("signDescription3").getValue().toString());
+                        sign_data_list.add(signHelper);
                     }
                 }
+                System.out.println("Hello World 3");
+                System.out.println(sign_data_list);
                 System.out.println(signs_dict);
 //                String url = "";
 //                for(Enumeration enm = signs_dict.keys(); enm.hasMoreElements();)
