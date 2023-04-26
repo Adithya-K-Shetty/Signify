@@ -30,7 +30,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCYO6R9qg5s6eUi0-a_m9851hiYX_UGsL0" />
+            android:value="AIzaSyAcK3nG_gktiqMx2XvybbN1JqR-JokVW8c" />
 
         <activity
             android:name=".Dashboard"

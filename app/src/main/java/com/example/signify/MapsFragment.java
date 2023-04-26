@@ -78,6 +78,26 @@ public class MapsFragment extends Fragment {
                                 // Update the map with the current location
                                 LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
                                 mMap.addMarker(new MarkerOptions().icon(bitmapDescriptorFromVector(getContext(),R.drawable.carmarker)).position(currentLocation).title("your location"));
+                                mMap.addMarker(new MarkerOptions().icon(bitmapDescriptorFromVector(getContext(),R.drawable.baseline_build_24)).position(new LatLng(12.954101081006554,74.91418997235218)).title("MGK Auto Works"));
+                                mMap.addMarker(new MarkerOptions().icon(bitmapDescriptorFromVector(getContext(),R.drawable.baseline_build_24)).position(new LatLng(12.870668108080803, 74.92053284757642)).title("Om Sai Auto Care"));
+                                mMap.addMarker(new MarkerOptions().icon(bitmapDescriptorFromVector(getContext(),R.drawable.baseline_build_24)).position(new LatLng(12.870166062249725, 74.91812958847144)).title("Balaji Body Works"));
+                                mMap.addMarker(new MarkerOptions().icon(bitmapDescriptorFromVector(getContext(),R.drawable.baseline_build_24)).position(new LatLng(12.871170152906714, 74.90491166339409)).title("Cauvery Ford Service"));
+                                mMap.addMarker(new MarkerOptions().icon(bitmapDescriptorFromVector(getContext(),R.drawable.baseline_build_24)).position(new LatLng(12.873513015469506, 74.89632859516206)).title("Canara car care center"));
+                                mMap.addMarker(new MarkerOptions().icon(bitmapDescriptorFromVector(getContext(),R.drawable.baseline_build_24)).position(new LatLng(12.878031331436063, 74.88843217238856)).title("Vehiclecare - Planet autowork"));
+                                mMap.addMarker(new MarkerOptions().icon(bitmapDescriptorFromVector(getContext(),R.drawable.baseline_build_24)).position(new LatLng(12.875854035919435, 74.88559678421052)).title("Ceat Autocare"));
+                                mMap.addMarker(new MarkerOptions().icon(bitmapDescriptorFromVector(getContext(),R.drawable.baseline_build_24)).position(new LatLng(12.864690420603877, 74.88907285557275)).title("WESTON AUTO TECH"));
+                                mMap.addMarker(new MarkerOptions().icon(bitmapDescriptorFromVector(getContext(),R.drawable.baseline_build_24)).position(new LatLng(12.852138673935055, 74.86401029414363)).title("Amma auto works"));
+                                mMap.addMarker(new MarkerOptions().icon(bitmapDescriptorFromVector(getContext(),R.drawable.baseline_build_24)).position(new LatLng(12.879751686687579, 74.85147901452484)).title("Car Garage"));
+                                mMap.addMarker(new MarkerOptions().icon(bitmapDescriptorFromVector(getContext(),R.drawable.baseline_build_24)).position(new LatLng(12.89447738320186, 74.88426633557754)).title("Antony Peter Dcosta"));
+                                mMap.addMarker(new MarkerOptions().icon(bitmapDescriptorFromVector(getContext(),R.drawable.baseline_build_24)).position(new LatLng(12.911210077620673, 74.86486860068365)).title("Central mechanical organizaton"));
+                                mMap.addMarker(new MarkerOptions().icon(bitmapDescriptorFromVector(getContext(),R.drawable.baseline_build_24)).position(new LatLng(12.926268544791663, 74.87207837799858)).title("Smart Cars | Car Cardiac Care Mangalore"));
+                                mMap.addMarker(new MarkerOptions().icon(bitmapDescriptorFromVector(getContext(),R.drawable.baseline_build_24)).position(new LatLng(12.930618599587264, 74.86521192341294)).title("Maruti 4 wheeler garage"));
+                                mMap.addMarker(new MarkerOptions().icon(bitmapDescriptorFromVector(getContext(),R.drawable.baseline_build_24)).position(new LatLng(12.909369536214111, 74.85130735252002)).title("MADHU GARAGE"));
+                                mMap.addMarker(new MarkerOptions().icon(bitmapDescriptorFromVector(getContext(),R.drawable.baseline_build_24)).position(new LatLng(12.927774341726211, 74.84272428428797)).title("TORQUE WRENCH AUTO REPAIR &DETAILING STUDIO"));
+                                mMap.addMarker(new MarkerOptions().icon(bitmapDescriptorFromVector(getContext(),R.drawable.baseline_build_24)).position(new LatLng(12.93296090553586, 74.83791776607802)).title("SG Automotives"));
+                                mMap.addMarker(new MarkerOptions().icon(bitmapDescriptorFromVector(getContext(),R.drawable.baseline_build_24)).position(new LatLng(12.929112819985377, 74.83534284434027)).title("Sri Manjunatha Auto Works & Service Station"));
+                                mMap.addMarker(new MarkerOptions().icon(bitmapDescriptorFromVector(getContext(),R.drawable.baseline_build_24)).position(new LatLng(12.902174561965332, 74.8379177649207)).title("Sri Durga Autoworks"));
+                                mMap.addMarker(new MarkerOptions().icon(bitmapDescriptorFromVector(getContext(),R.drawable.baseline_build_24)).position(new LatLng(12.894644716056307, 74.84032102402567)).title("Shriyan Auto Works"));
                                 CameraPosition cameraPosition = new CameraPosition.Builder()
                                         .target(currentLocation )
                                         .zoom(18)
@@ -105,52 +125,6 @@ public class MapsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-//        // Initialize Google Places API client
-//        PlacesClient placesClient = Places.createClient(getContext());
-//        if (!Places.isInitialized()) {
-//            Places.initialize(requireContext().getApplicationContext(), "AIzaSyCYO6R9qg5s6eUi0-a_m9851hiYX_UGsL0");
-//        }
-//// Initialize FusedLocationProviderClient
-//        FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
-//
-//// Get the current user's location
-//        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-//            fusedLocationProviderClient.getLastLocation().addOnSuccessListener((location) -> {
-//                if (location != null) {
-//                    // Use the user's location to search for nearby mechanics
-//                    LatLng userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-//                    LatLngBounds bounds = LatLngBounds.builder().include(userLatLng).build();
-//                    FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
-//                            .setTypeFilter(TypeFilter.ESTABLISHMENT)
-//                            .setLocationBias(RectangularBounds.newInstance(bounds))
-//                            .setQuery("mechanic")
-//                            .build();
-//                    placesClient.findAutocompletePredictions(request).addOnSuccessListener((response) -> {
-//                        if (response.getAutocompletePredictions().size() > 0) {
-//                            // Get the details of the closest mechanic
-//                            AutocompletePrediction prediction = response.getAutocompletePredictions().get(0);
-//                            String placeId = prediction.getPlaceId();
-//                            FetchPlaceRequest placeRequest = FetchPlaceRequest.builder(placeId, Arrays.asList(Place.Field.LAT_LNG)).build();
-//                            placesClient.fetchPlace(placeRequest).addOnSuccessListener((placeResponse) -> {
-//                                LatLng mechanicLatLng = placeResponse.getPlace().getLatLng();
-//                                // Use the mechanic's location to show a marker on the map
-//                                mapFragment.getMapAsync((googleMap) -> {
-//                                    googleMap.addMarker(new MarkerOptions().position(mechanicLatLng).title("Mechanic"));
-//                                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mechanicLatLng, 15));
-//                                });
-//                            });
-//                        } else {
-//                            Toast.makeText(getContext(), "No nearby mechanics found", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//                } else {
-//                    Toast.makeText(getContext(), "Location not found", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        } else {
-//            // Request location permission if not granted
-//            ActivityCompat.requestPermissions(requireActivity(), new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, REQUEST_LOCATION_PERMISSION);
-//        }
 
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);

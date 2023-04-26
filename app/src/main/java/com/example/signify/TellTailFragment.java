@@ -118,7 +118,7 @@ public class TellTailFragment extends Fragment {
         @Override
         protected String doInBackground(Void... voids) {
 
-            String postUrl = "http://192.168.43.101:5000/inputImage";
+            String postUrl = "http://192.168.86.154:5000/inputImage";
 
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             img.compress(Bitmap.CompressFormat.JPEG, 100, stream);
