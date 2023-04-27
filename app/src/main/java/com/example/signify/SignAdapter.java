@@ -1,9 +1,12 @@
 package com.example.signify;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -52,9 +55,31 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHold> 
 //        holder.title.setText(signhelper.getTitle());
 
         /** Testing New Stuff **/
+        holder.show_more_Btn.setTag(position);
         Glide.with(mContext).load(signloc.get(position).getImageUrl()).into(holder.image);
         holder.title.setText(signloc.get(position).getTitle());
         /** End Of Testing **/
+
+        holder.show_more_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Integer cardPosition = (Integer) view.getTag();
+                String signName = signloc.get(cardPosition).getTitle();
+                String signImage = signloc.get(cardPosition).getImageUrl();
+                String whatItMeans = signloc.get(cardPosition).getDescription1();
+                String whatToDo = signloc.get(cardPosition).getDescription2();
+                String severityValue = signloc.get(cardPosition).getSeverityValue();
+                Intent intent = new Intent(mContext,SignInfo.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("signName",signName);
+                bundle.putString("signImage",signImage);
+                bundle.putString("whatItMeans",whatItMeans);
+                bundle.putString("whatToDo",whatToDo);
+                bundle.putString("severityValue",severityValue);
+                intent.putExtra("allSignsData",bundle);
+                view.getContext().startActivity(intent);
+            }
+        });
 
     }
 
@@ -73,6 +98,7 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHold> 
 
         ImageView image;
         TextView  title;
+        Button show_more_Btn;
         RelativeLayout relativeLayout;
 
 
@@ -82,6 +108,7 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHold> 
             //hooks
             image = itemView.findViewById(R.id.sign_image);
             title = itemView.findViewById(R.id.s_title);
+            show_more_Btn = itemView.findViewById(R.id.show_info);
 
         }
 

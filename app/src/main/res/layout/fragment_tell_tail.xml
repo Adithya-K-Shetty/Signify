@@ -26,10 +26,10 @@
             app:layout_constraintVertical_bias="0.297" />
 
         <Button
-            android:id="@+id/predictBtn"
+            android:id="@+id/galleryBtn"
             android:layout_width="159dp"
             android:layout_height="61dp"
-            android:text="PREDICT"
+            android:text="GALLERY"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

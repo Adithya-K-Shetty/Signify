@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -64,8 +65,6 @@ public class TellTailFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    Button pred_btn;
-
     Bitmap img;
     public String all_signs;
 
@@ -120,16 +119,31 @@ public class TellTailFragment extends Fragment {
 
             if(received_image){
                 new MyAsyncTask().execute();
+                received_image = false;
             }
 
+        }
+        else{
+            System.out.println("Entered Gallery");
+            Uri dat = data.getData();
+            try {
+                img = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), dat);
+                received_image = true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if(received_image){
+                new MyAsyncTask().execute();
+                received_image = false;
+            }
         }
     }
     private class MyAsyncTask extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... voids) {
 
-            String postUrl = "http://192.168.43.101:5000/inputImage";
-//            String postUrl = "https://c2d4-117-200-101-80.in.ngrok.io/inputImage";
+//            String postUrl = "http://192.168.43.101:5000/inputImage";
+            String postUrl = "http://192.168.1.192:5000/inputImage";
 
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             img.compress(Bitmap.CompressFormat.JPEG, 100, stream);
@@ -223,6 +237,7 @@ public class TellTailFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_tell_tail, container, false);
         Button cam_btn = (Button) view.findViewById(R.id.cameraBtn);
+        Button gallery_btn = (Button) view.findViewById(R.id.galleryBtn);
         cam_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -232,6 +247,13 @@ public class TellTailFragment extends Fragment {
                 } else {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
                 }
+            }
+        });
+        gallery_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cameraIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(cameraIntent, 1);
             }
         });
         return view;
