@@ -9,18 +9,26 @@ import android.widget.Toast;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 
 public class Dashboard extends AppCompatActivity {
-    MeowBottomNavigation bottomNavigation;
+    public static MeowBottomNavigation bottomNavigation;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        TellTailFragment tellTailFragment = new TellTailFragment();
+        tellTailFragment.sign_data_list = null;
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.baseline_home_24));
         bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.baseline_warning_24));
         bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.baseline_format_list_bulleted_24));
+//        if(tellTailFragment.sign_data_list != null)
+//        {
+//            bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.baseline_format_list_bulleted_24));
+//        }
         bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.baseline_location_on_24));
+
+
 
         bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
             @Override

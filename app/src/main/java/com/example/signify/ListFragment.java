@@ -101,7 +101,7 @@ public class ListFragment extends Fragment {
 
 
 //        adapter = new SignAdapter(signloc,signClick);
-        adapter = new SignAdapter(getContext(),signloc,signClick);
+        adapter = new SignAdapter(getContext(),signloc);
         signs.setAdapter(adapter);
 
     }

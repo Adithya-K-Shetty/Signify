@@ -11,9 +11,13 @@ import android.view.animation.AnimationUtils;
 
 import com.example.signify.databinding.ActivityMainBinding;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     Animation topAni,bottomAni;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -25,17 +25,17 @@ import java.util.ArrayList;
 public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHold>  {
 
     ArrayList<SignHelper> signloc;
-    final private ListItemClickListener SignClickListener;
+//    final private ListItemClickListener SignClickListener;
     private Context mContext;
 
 //    public SignAdapter(ArrayList<SignHelper>signloc, ListItemClickListener listener) {
 //        this.signloc = signloc;
 //        SignClickListener = listener;
 //    }
-    public SignAdapter(Context mContext,ArrayList<SignHelper>signloc,ListItemClickListener listener){
+    public SignAdapter(Context mContext,ArrayList<SignHelper>signloc){
         this.mContext = mContext;
         this.signloc = signloc;
-        SignClickListener = listener;
+
     }
 
     @NonNull
@@ -115,7 +115,7 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHold> 
         @Override
         public void onClick(View v) {
             int clickedPosition = getAdapterPosition();
-            SignClickListener.onsignListClick(clickedPosition);
+            //SignClickListener.onsignListClick(clickedPosition);
         }
     }
 

@@ -1,5 +1,7 @@
 package com.example.signify;
 
+import static android.app.Activity.RESULT_CANCELED;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,7 +43,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -72,6 +76,8 @@ public class TellTailFragment extends Fragment {
 //    public ArrayList<String> imageUrlList =  new ArrayList<String>();
 //    public ArrayList<String> mainDescriptionList = new ArrayList<String>();
 //    public ArrayList<String> subDescruptionList = new ArrayList<String>();
+
+    /** change made here **/
     public static ArrayList<SignHelper> sign_data_list;
     public Boolean received_image = false;
 
@@ -103,7 +109,8 @@ public class TellTailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 //        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         myRef = FirebaseDatabase.getInstance().getReference();
-        sign_data_list = new ArrayList<>();
+//        sign_data_list = new ArrayList<>();
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -113,11 +120,17 @@ public class TellTailFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_CANCELED)
+        {
+            System.out.println("Fragment Closed");
+            return;
+        }
         if(requestCode == 3){
             img  = (Bitmap) data.getExtras().get("data");
             received_image = true;
 
             if(received_image){
+                Toast.makeText(getActivity().getApplicationContext(), "Check ⠇☰ for the detected signs", Toast.LENGTH_LONG).show();
                 new MyAsyncTask().execute();
                 received_image = false;
             }
@@ -135,6 +148,7 @@ public class TellTailFragment extends Fragment {
             if(received_image){
                 new MyAsyncTask().execute();
                 received_image = false;
+//                sign_data_list = null;
             }
         }
     }
@@ -142,8 +156,8 @@ public class TellTailFragment extends Fragment {
         @Override
         protected String doInBackground(Void... voids) {
 
-//            String postUrl = "http://192.168.43.101:5000/inputImage";
-            String postUrl = "http://192.168.1.192:5000/inputImage";
+
+            String postUrl = "http://192.168.43.54:5000/inputImage";  // (Ashwin's Url)
 
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             img.compress(Bitmap.CompressFormat.JPEG, 100, stream);
@@ -192,6 +206,7 @@ public class TellTailFragment extends Fragment {
         }
     }
     private void get_data(ArrayList<String> all_signs_list) {
+        sign_data_list = new ArrayList<>();
         Query query = myRef.child("AllSigns");
         System.out.println("Hello World 1");
         query.addValueEventListener(new ValueEventListener() {
@@ -210,6 +225,11 @@ public class TellTailFragment extends Fragment {
                         sign_data_list.add(signHelper);
                     }
                 }
+//                if(sign_data_list != null)
+//                {
+//                    Dashboard dashboard = new Dashboard();
+//                    dashboard.bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.baseline_format_list_bulleted_24));
+//                }
                 System.out.println("Hello World 3");
                 System.out.println(sign_data_list);
                 System.out.println(signs_dict);
