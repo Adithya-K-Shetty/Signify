@@ -17,7 +17,7 @@ public class Dashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         TellTailFragment tellTailFragment = new TellTailFragment();
-        tellTailFragment.sign_data_list = null;
+//        tellTailFragment.sign_data_list = null;
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.baseline_home_24));
         bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.baseline_warning_24));
@@ -44,8 +44,19 @@ public class Dashboard extends AppCompatActivity {
                         fragment = new TellTailFragment();
                         break;
                     case 3:
-                        fragment = new ListFragment();
-                        break;
+                        /** Testing Something New **/
+                        if(tellTailFragment.sign_data_list != null)
+                        {
+                            fragment = new ListFragment();
+                            break;
+                        }
+                        else{
+                            fragment = new NotFound();
+                            break;
+                        }
+                        /**End Of Testing **/
+//                        fragment = new ListFragment();
+//                        break;
                     case 4:
                         fragment = new MapsFragment();
                         break;
